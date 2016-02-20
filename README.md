@@ -1,4 +1,4 @@
-WiSHFUL WiFI Module
+WiSHFUL Simple Agent Module
 ============================
 
 This is a prototypic implementation of a wireless agent providing the Unified
