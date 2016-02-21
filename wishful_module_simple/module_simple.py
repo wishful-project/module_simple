@@ -9,6 +9,7 @@ __version__ = "0.1.0"
 __email__ = "{gawlowicz}@tkn.tu-berlin.de"
 
 
+@wishful_module.build_module
 class SimpleModule(wishful_module.AgentUpiModule):
     def __init__(self, agentPort=None):
         super(SimpleModule, self).__init__(agentPort)
@@ -39,6 +40,7 @@ class SimpleModule(wishful_module.AgentUpiModule):
         return self.power
 
 
+@wishful_module.build_module
 class SimpleModule2(SimpleModule):
     def __init__(self, agentPort=None):
         super(SimpleModule2, self).__init__(agentPort)
