@@ -50,19 +50,19 @@ class SimpleModule2(SimpleModule):
 
     @wishful_module.bind_function(upis.radio.set_power)
     def set_power(self, power):
-        self.log.debug("Simple222 Module sets power: {} on interface: {}".format(power, self.interface))
+        self.log.debug("SimpleModule2 sets power: {} on interface: {}".format(power, self.interface))
         self.power = power
         return {"SET_POWER_OK_value" : power}
 
 
     @wishful_module.bind_function(upis.radio.get_power)
     def get_power(self):
-        self.log.debug("Simple222 Module gets power on interface: {}".format(self.interface))
+        self.log.debug("SimpleModule2 gets power on interface: {}".format(self.interface))
         return self.power
 
     @wishful_module.bind_function(upis.radio.set_edca_parameters)
     def setEdcaParameters(self, queueId, queueParams):
-        self.log.debug("Simple222 Module sets EDCA parameters for queue: {} on interface: {}".format(queueId, self.interface))
+        self.log.debug("SimpleModule2 sets EDCA parameters for queue: {} on interface: {}".format(queueId, self.interface))
 
         print "Setting EDCA parameters for queue: {}".format(queueId)
         print "AIFS: {}".format(queueParams.getAifs())
