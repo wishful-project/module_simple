@@ -10,9 +10,9 @@ __email__ = "{gawlowicz}@tkn.tu-berlin.de"
 
 
 @wishful_module.build_module
-class SimpleModule(wishful_module.AgentUpiModule):
-    def __init__(self, agentPort=None):
-        super(SimpleModule, self).__init__(agentPort)
+class SimpleModule(wishful_module.AgentModule):
+    def __init__(self):
+        super(SimpleModule, self).__init__()
         self.log = logging.getLogger('wifi_module.main')
         self.channel = 1
         self.power = 1
@@ -42,8 +42,8 @@ class SimpleModule(wishful_module.AgentUpiModule):
 
 @wishful_module.build_module
 class SimpleModule2(SimpleModule):
-    def __init__(self, agentPort=None):
-        super(SimpleModule2, self).__init__(agentPort)
+    def __init__(self):
+        super(SimpleModule2, self).__init__()
         self.log = logging.getLogger('wifi_module.main')
         self.channel = 1
         self.power = 1
