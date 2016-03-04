@@ -60,7 +60,7 @@ class SimpleModule2(SimpleModule):
         self.log.debug("SimpleModule2 gets power on interface: {}".format(self.interface))
         return self.power
 
-    @wishful_module.bind_function(upis.radio.set_edca_parameters)
+    @wishful_module.bind_function(upis.radio.set_mac_access_parameters)
     def setEdcaParameters(self, queueId, queueParams):
         self.log.debug("SimpleModule2 sets EDCA parameters for queue: {} on interface: {}".format(queueId, self.interface))
 
