@@ -60,6 +60,25 @@ class SimpleModule2(SimpleModule):
         self.log.debug("SimpleModule2 gets power on interface: {}".format(self.interface))
         return self.power
 
+
+    @wishful_module.bind_function(upis.radio.get_rssi)
+    def get_rssi(self):
+        self.log.debug("Get RSSI".format())
+        return random.randint(-90, 30)
+
+
+    @wishful_module.bind_function(upis.radio.get_noise)
+    def get_noise(self):
+        self.log.debug("Get Noise".format())
+        return random.randint(-120, -30)
+
+
+    @wishful_module.bind_function(upis.radio.get_airtime_utilization)
+    def get_airtime_utilization(self):
+        self.log.debug("Get Airtime Utilization".format())
+        return random.random()
+
+
     @wishful_module.bind_function(upis.radio.set_mac_access_parameters)
     def setEdcaParameters(self, queueId, queueParams):
         self.log.debug("SimpleModule2 sets EDCA parameters for queue: {} on interface: {}".format(queueId, self.interface))
