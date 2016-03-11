@@ -17,13 +17,13 @@ class SimpleModule(wishful_module.AgentModule):
         self.channel = 1
         self.power = 1
 
-    @wishful_module.bind_function(upis.radio.set_channel)
+    @wishful_module.bind_function(upis.wifi.radio.set_channel)
     def set_channel(self, channel):
         self.log.debug("Simple Module sets channel: {} on interface: {}".format(channel, self.interface))
         self.channel = channel
         return ["SET_CHANNEL_OK", channel, 0]
 
-    @wishful_module.bind_function(upis.radio.get_channel)
+    @wishful_module.bind_function(upis.wifi.radio.get_channel)
     def get_channel(self):
         self.log.debug("Simple Module gets channel of interface: {}".format(self.interface))
         return self.channel
