@@ -2,6 +2,7 @@ import logging
 import random
 import wishful_upis as upis
 import wishful_framework as wishful_module
+from wishful_framework.classes import exceptions
 
 __author__ = "Piotr Gawlowicz"
 __copyright__ = "Copyright (c) 2015, Technische Universität Berlin"
@@ -76,7 +77,13 @@ class SimpleModule2(SimpleModule):
     @wishful_module.bind_function(upis.radio.get_airtime_utilization)
     def get_airtime_utilization(self):
         self.log.debug("Get Airtime Utilization".format())
-        return random.random()
+        return None
+
+
+    @wishful_module.bind_function(upis.radio.clean_per_flow_tx_power_table)
+    def clean_per_flow_tx_power_table(self):
+        self.log.debug("clean per flow tx power table".format())
+        raise exceptions.UPIFunctionExecutionFailedException(func_name='radio.clean_per_flow_tx_power_table', err_msg='wrong')
 
 
     @wishful_module.bind_function(upis.radio.set_mac_access_parameters)
