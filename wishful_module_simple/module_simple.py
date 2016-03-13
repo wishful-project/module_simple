@@ -78,7 +78,7 @@ class SimpleModule(wishful_module.AgentModule):
         return self.power
 
 
-    @wishful_module.generator():
+    @wishful_module.generator()
     @wishful_module.bind_function(upis.radio.get_rssi)
     def get_rssi(self):
         self.log.debug("Get RSSI".format())
