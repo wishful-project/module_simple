@@ -44,22 +44,33 @@ class SimpleModule(wishful_module.AgentModule):
         self.log.info("This function is executed before first UPI call to module".format())
 
 
+    def before_set_channel(self):
+        self.log.info("This function is executed before set_channel".format())
+
+    def after_set_channel(self):
+        self.log.info("This function is executed after set_channel".format())
+
+    @wishful_module.before_call(before_set_channel)
+    @wishful_module.after_call(after_set_channel)
     @wishful_module.bind_function(upis.wifi.radio.set_channel)
     def set_channel(self, channel):
-        self.log.debug("Simple Module sets channel: {} on interface: {}".format(channel, self.interface))
+        self.log.info("Simple Module sets channel: {} on interface: {}".format(channel, self.interface))
         self.channel = channel
         return ["SET_CHANNEL_OK", channel, 0]
+
 
     @wishful_module.bind_function(upis.wifi.radio.get_channel)
     def get_channel(self):
         self.log.debug("Simple Module gets channel of interface: {}".format(self.interface))
         return self.channel
 
+
     @wishful_module.bind_function(upis.radio.set_power)
     def set_power(self, power):
         self.log.debug("Simple Module sets power: {} on interface: {}".format(power, self.interface))
         self.power = power
         return {"SET_POWER_OK_value" : power}
+
 
     @wishful_module.bind_function(upis.radio.get_power)
     def get_power(self):
