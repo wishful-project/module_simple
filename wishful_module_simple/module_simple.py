@@ -14,9 +14,35 @@ __email__ = "{gawlowicz}@tkn.tu-berlin.de"
 class SimpleModule(wishful_module.AgentModule):
     def __init__(self):
         super(SimpleModule, self).__init__()
-        self.log = logging.getLogger('wifi_module.main')
+        self.log = logging.getLogger('SimpleModule')
         self.channel = 1
         self.power = 1
+
+
+    @wishful_module.on_start()
+    def myFunc_1(self):
+        self.log.info("This function is executed on agent start".format())
+
+
+    @wishful_module.on_exit()
+    def myFunc_2(self):
+        self.log.info("This function is executed on agent exit".format())
+
+
+    @wishful_module.on_connected()
+    def myFunc_3(self):
+        self.log.info("This function is executed on connection to global controller".format())
+
+
+    @wishful_module.on_disconnected()
+    def myFunc_4(self):
+        self.log.info("This function is executed after connection with global controller was lost".format())
+
+
+    @wishful_module.on_first_call_to_module()
+    def myFunc_5(self):
+        self.log.info("This function is executed before first UPI call to module".format())
+
 
     @wishful_module.bind_function(upis.wifi.radio.set_channel)
     def set_channel(self, channel):
@@ -41,59 +67,7 @@ class SimpleModule(wishful_module.AgentModule):
         return self.power
 
 
-@wishful_module.build_module
-class SimpleModule2(SimpleModule):
-    def __init__(self):
-        super(SimpleModule2, self).__init__()
-        self.log = logging.getLogger('wifi_module.main')
-        self.channel = 1
-        self.power = 1
-
-    @wishful_module.bind_function(upis.radio.set_power)
-    def set_power(self, power):
-        self.log.debug("SimpleModule2 sets power: {} on interface: {}".format(power, self.interface))
-        self.power = power
-        return {"SET_POWER_OK_value" : power}
-
-
-    @wishful_module.bind_function(upis.radio.get_power)
-    def get_power(self):
-        self.log.debug("SimpleModule2 gets power on interface: {}".format(self.interface))
-        return self.power
-
-
-    @wishful_module.bind_function(upis.radio.get_rssi)
-    def get_rssi(self):
-        self.log.debug("Get RSSI".format())
-        return random.randint(-90, 30)
-
-
     @wishful_module.bind_function(upis.radio.get_noise)
     def get_noise(self):
         self.log.debug("Get Noise".format())
-        return random.randint(-120, -30)
-
-
-    @wishful_module.bind_function(upis.radio.get_airtime_utilization)
-    def get_airtime_utilization(self):
-        self.log.debug("Get Airtime Utilization".format())
-        return None
-
-
-    @wishful_module.bind_function(upis.radio.clean_per_flow_tx_power_table)
-    def clean_per_flow_tx_power_table(self):
-        self.log.debug("clean per flow tx power table".format())
-        raise exceptions.UPIFunctionExecutionFailedException(func_name='radio.clean_per_flow_tx_power_table', err_msg='wrong')
-
-
-    @wishful_module.bind_function(upis.radio.set_mac_access_parameters)
-    def setEdcaParameters(self, queueId, queueParams):
-        self.log.debug("SimpleModule2 sets EDCA parameters for queue: {} on interface: {}".format(queueId, self.interface))
-
-        print "Setting EDCA parameters for queue: {}".format(queueId)
-        print "AIFS: {}".format(queueParams.getAifs())
-        print "CwMin: {}".format(queueParams.getCwMin())
-        print "CwMax: {}".format(queueParams.getCwMax())
-        print "TxOp: {}".format(queueParams.getTxOp())
-
-        return 0
+        yield random.randint(-120, -30)
