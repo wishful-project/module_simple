@@ -78,7 +78,8 @@ class SimpleModule(wishful_module.AgentModule):
         return self.power
 
 
-    @wishful_module.bind_function(upis.radio.get_noise)
-    def get_noise(self):
-        self.log.debug("Get Noise".format())
-        yield random.randint(-120, -30)
+    @wishful_module.generator():
+    @wishful_module.bind_function(upis.radio.get_rssi)
+    def get_rssi(self):
+        self.log.debug("Get RSSI".format())
+        yield random.randint(-90, 30)
