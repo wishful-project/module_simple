@@ -1,5 +1,6 @@
 import logging
 import random
+import time
 import wishful_upis as upis
 import wishful_framework as wishful_module
 from wishful_framework.classes import exceptions
@@ -82,4 +83,6 @@ class SimpleModule(wishful_module.AgentModule):
     @wishful_module.bind_function(upis.radio.get_rssi)
     def get_rssi(self):
         self.log.debug("Get RSSI".format())
-        yield random.randint(-90, 30)
+        while True:
+            time.sleep(0.2)
+            yield random.randint(-90, 30)
