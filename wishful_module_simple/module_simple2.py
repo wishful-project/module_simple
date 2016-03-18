@@ -4,7 +4,7 @@ import wishful_upis as upis
 import wishful_framework as wishful_module
 from wishful_framework.classes import exceptions
 
-from module_simple import SimpleModule
+from .module_simple import SimpleModule
 
 __author__ = "Piotr Gawlowicz"
 __copyright__ = "Copyright (c) 2015, Technische Universität Berlin"
@@ -55,10 +55,10 @@ class SimpleModule2(SimpleModule):
     def setEdcaParameters(self, queueId, queueParams):
         self.log.debug("SimpleModule2 sets EDCA parameters for queue: {} on interface: {}".format(queueId, self.interface))
 
-        print "Setting EDCA parameters for queue: {}".format(queueId)
-        print "AIFS: {}".format(queueParams.getAifs())
-        print "CwMin: {}".format(queueParams.getCwMin())
-        print "CwMax: {}".format(queueParams.getCwMax())
-        print "TxOp: {}".format(queueParams.getTxOp())
+        print("Setting EDCA parameters for queue: {}".format(queueId))
+        print("AIFS: {}".format(queueParams.getAifs()))
+        print("CwMin: {}".format(queueParams.getCwMin()))
+        print("CwMax: {}".format(queueParams.getCwMax()))
+        print("TxOp: {}".format(queueParams.getTxOp()))
 
         return 0

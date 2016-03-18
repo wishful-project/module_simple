@@ -1,7 +1,7 @@
 import logging
 import random
 import time
-import Queue
+import queue
 
 import wishful_upis as upis
 import wishful_framework as wishful_module
@@ -22,7 +22,7 @@ class SimpleModule(wishful_module.AgentModule):
         self.power = 1
 
         self.stopRssi = True
-        self.rssiSampleQueue = Queue.Queue()
+        self.rssiSampleQueue = queue.Queue()
 
 
     @wishful_module.on_start()
