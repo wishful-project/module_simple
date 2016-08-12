@@ -36,7 +36,7 @@ class SimpleModule(wishful_module.AgentModule):
     @wishful_module.on_connected()
     def myFunc_3(self):
         self.log.info("This function is executed on connection"
-                      "to global controller".format())
+                      " to global controller".format())
 
     @wishful_module.on_disconnected()
     def myFunc_4(self):
@@ -107,7 +107,6 @@ class SimpleModule(wishful_module.AgentModule):
         self.log.info("This function is executed after get_rssi".format())
         self.stopRssi = True
 
-    @wishful_module.generator()
     @wishful_module.before_call(before_get_rssi)
     @wishful_module.after_call(after_get_rssi)
     @wishful_module.bind_function(upis.radio.get_rssi)
