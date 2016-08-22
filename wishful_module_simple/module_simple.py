@@ -4,6 +4,7 @@ import time
 import queue
 import wishful_upis as upis
 import wishful_framework as wishful_module
+from wishful_framework.classes import exceptions
 
 __author__ = "Piotr Gawlowicz"
 __copyright__ = "Copyright (c) 2015, Technische Universität Berlin"
@@ -58,21 +59,21 @@ class SimpleModule(wishful_module.AgentModule):
 
     @wishful_module.before_call(before_set_channel)
     @wishful_module.after_call(after_set_channel)
-    @wishful_module.on_function(upis.wifi.radio.set_channel)
+    @wishful_module.bind_function(upis.wifi.radio.set_channel)
     def set_channel(self, channel):
         self.log.info("Simple Module sets channel: {} on device: {}".format(
             channel, self.device))
         self.channel = channel
         return ["SET_CHANNEL_OK", channel, 0]
 
-    @wishful_module.on_function(upis.wifi.radio.get_channel)
+    @wishful_module.bind_function(upis.wifi.radio.get_channel)
     def get_channel(self):
         self.log.debug(
             "Simple Module gets channel of device: {}"
             .format(self.device))
         return self.channel
 
-    @wishful_module.on_function(upis.radio.set_power)
+    @wishful_module.bind_function(upis.radio.set_power)
     def set_power(self, power):
         self.log.debug("Simple Module sets power: {} on device: {}".format(
             power, self.device))
@@ -85,62 +86,38 @@ class SimpleModule(wishful_module.AgentModule):
             "Simple Module gets power on device: {}".format(self.device))
         return self.power
 
-    @wishful_module.run_in_thread()
-    def before_get_rssi(self):
-        self.log.info("This function is executed before get_rssi".format())
-        self.stopRssi = False
-        while not self.stopRssi:
-            time.sleep(0.2)
-            sample = random.randint(-90, 30)
-            self.rssiSampleQueue.put(sample)
-
-        # empty sample queue
-        self.log.info("Empty sample queue".format())
-        while True:
-            try:
-                self.rssiSampleQueue.get(block=True, timeout=0.1)
-            except:
-                self.log.info("Sample queue is empty".format())
-                break
-
-    def after_get_rssi(self):
-        self.log.info("This function is executed after get_rssi".format())
-        self.stopRssi = True
-
-    @wishful_module.before_call(before_get_rssi)
-    @wishful_module.after_call(after_get_rssi)
-    @wishful_module.bind_function(upis.radio.get_rssi)
-    def get_rssi(self):
-        self.log.debug("Get RSSI".format())
-        while True:
-            yield self.rssiSampleQueue.get()
-
-    @wishful_module.bind_event_start(upis.radio.PacketLossEvent)
-    def packet_loss_event_start(self):
+    @wishful_module.event_enable(upis.radio.PacketLossEvent)
+    def packet_loss_event_enable(self):
         self._packetLossEventRunning = True
 
         while self._packetLossEventRunning:
-            self.log.info("Packet Lost")
+            self.log.debug("Packet Lost")
             event = upis.radio.PacketLossEvent()
             # yeld or send Event to controller
             self.send_event(event)
-            time.sleep(5)
+            time.sleep(random.uniform(0, 10))
 
-    @wishful_module.bind_event_stop(upis.radio.PacketLossEvent)
-    def packet_loss_event_stop(self):
+    @wishful_module.event_disable(upis.radio.PacketLossEvent)
+    def packet_loss_event_disable(self):
         self._packetLossEventRunning = False
 
-    @wishful_module.bind_service_start(upis.radio.SpectralScanService)
+    @wishful_module.service_start(upis.radio.SpectralScanService)
     def spectral_scan_service_start(self):
         self._spectralScanServiceRunning = True
 
         while self._spectralScanServiceRunning:
-            self.log.info("Spectral scan sample")
-            service = upis.radio.SpectralScanServiceMsg(samples=[1, 3, 4])
-            self.send_service(service)
-            # yeld or send Service (sample) to controller
-            time.sleep(5)
+            self.log.debug("Spectral scan sample")
+            sample = upis.radio.SpectralScanSampleEvent(
+                sample=random.uniform(0, 64))
+            self.send_event(sample)
+            time.sleep(1)
 
-    @wishful_module.bind_service_stop(upis.radio.SpectralScanService)
+    @wishful_module.service_stop(upis.radio.SpectralScanService)
     def spectral_scan_service_stop(self):
         self._spectralScanServiceRunning = False
+
+    @wishful_module.on_function(upis.radio.clean_per_flow_tx_power_table)
+    def clean_per_flow_tx_power_table(self):
+        self.log.debug("clean per flow tx power table".format())
+        raise exceptions.UPIFunctionExecutionFailedException(
+            func_name='radio.clean_per_flow_tx_power_table', err_msg='wrong')

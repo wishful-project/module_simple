@@ -43,12 +43,6 @@ class SimpleModule2(SimpleModule):
         self.log.debug("Get Airtime Utilization".format())
         return None
 
-    @wishful_module.on_function(upis.radio.clean_per_flow_tx_power_table)
-    def clean_per_flow_tx_power_table(self):
-        self.log.debug("clean per flow tx power table".format())
-        raise exceptions.UPIFunctionExecutionFailedException(
-            func_name='radio.clean_per_flow_tx_power_table', err_msg='wrong')
-
     @wishful_module.on_function(upis.radio.set_mac_access_parameters)
     def setEdcaParameters(self, queueId, queueParams):
         self.log.debug("SimpleModule2 sets EDCA parameters "
