@@ -3,8 +3,8 @@ import random
 import time
 import queue
 import wishful_upis as upis
-import wishful_framework as wishful_module
-from wishful_framework.classes import exceptions
+from wishful_agent.core import wishful_module
+from wishful_agent.core import exceptions
 
 __author__ = "Piotr Gawlowicz"
 __copyright__ = "Copyright (c) 2015, Technische Universität Berlin"

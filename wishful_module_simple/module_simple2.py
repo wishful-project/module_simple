@@ -1,9 +1,7 @@
 import logging
 import random
 import wishful_upis as upis
-import wishful_framework as wishful_module
-from wishful_framework.classes import exceptions
-
+from wishful_agent.core import wishful_module
 from .module_simple import SimpleModule
 
 __author__ = "Piotr Gawlowicz"
