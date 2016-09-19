@@ -3,6 +3,7 @@ import random
 import wishful_upis as upis
 from wishful_agent.core import wishful_module
 from .module_simple import SimpleModule
+from random import randint
 
 __author__ = "Piotr Gawlowicz"
 __copyright__ = "Copyright (c) 2015, Technische Universität Berlin"
@@ -53,3 +54,4 @@ class SimpleModule2(SimpleModule):
         print("CwMax: {}".format(queueParams.getCwMax()))
         print("TxOp: {}".format(queueParams.getTxOp()))
         return 0
+
