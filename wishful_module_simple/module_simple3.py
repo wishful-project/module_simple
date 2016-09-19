@@ -18,8 +18,9 @@ class SimpleModule3(wishful_module.AgentModule):
 
     @wishful_module.on_function(upis.wifi.net.get_inactivity_time_of_connected_devices)
     def get_inactivity_time_of_connected_devices(self):
-        self.log.info("SimpleModule3 get_inactivity_time_of_connected_devices: {}"
-                       .format(self.device))
+        self.log.info("SimpleModule3 get_inactivity_time_of_connected_devices")
         res = {}
-        res['00:11:22:33:44:55'] = randint(0,100)
+        res['00:11:22:33:44:55'] = [str(randint(0,100)), 'ms']
+        self.log.info(str(res))
+
         return res
