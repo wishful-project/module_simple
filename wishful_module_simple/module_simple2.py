@@ -20,14 +20,14 @@ class SimpleModule2(SimpleModule):
         self.power = 1
 
     @wishful_module.on_function(upis.radio.set_power)
-    def set_power(self, power):
-        self.log.debug("SimpleModule2 sets power: {} on device: {}"
-                       .format(power, self.device))
+    def set_power(self, power, iface):
+        self.log.debug("SimpleModule2 sets power: {} on device: {} and iface: {}"
+                       .format(power, self.device, iface))
         self.power = power
         return {"SET_POWER_OK_value": power}
 
     @wishful_module.on_function(upis.radio.get_power)
-    def get_power(self):
+    def get_power(self, iface):
         self.log.debug("SimpleModule2 gets power on device: {}"
                        .format(self.device))
         return self.power

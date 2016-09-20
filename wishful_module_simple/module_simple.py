@@ -60,30 +60,30 @@ class SimpleModule(wishful_module.AgentModule):
     @wishful_module.before_call(before_set_channel)
     @wishful_module.after_call(after_set_channel)
     @wishful_module.bind_function(upis.wifi.radio.set_channel)
-    def set_channel(self, channel):
-        self.log.info("Simple Module sets channel: {} on device: {}".format(
-            channel, self.device))
+    def set_channel(self, channel, iface):
+        self.log.info("Simple Module sets channel: {} on device: {} and iface: {}".format(
+            channel, self.device, iface))
         self.channel = channel
         return ["SET_CHANNEL_OK", channel, 0]
 
     @wishful_module.bind_function(upis.wifi.radio.get_channel)
-    def get_channel(self):
+    def get_channel(self, iface):
         self.log.debug(
-            "Simple Module gets channel of device: {}"
-            .format(self.device))
+            "Simple Module gets channel of device: {} and iface: {}"
+            .format(self.device, iface))
         return self.channel
 
     @wishful_module.bind_function(upis.radio.set_power)
-    def set_power(self, power):
-        self.log.debug("Simple Module sets power: {} on device: {}".format(
-            power, self.device))
+    def set_power(self, power, iface):
+        self.log.debug("Simple Module sets power: {} on device: {} and iface: {}".format(
+            power, self.device, iface))
         self.power = power
         return {"SET_POWER_OK_value": power}
 
     @wishful_module.bind_function(upis.radio.get_power)
-    def get_power(self):
+    def get_power(self, iface):
         self.log.debug(
-            "Simple Module gets power on device: {}".format(self.device))
+            "Simple Module gets power on device: {} and iface: {}".format(self.device, iface))
         return self.power
 
     @wishful_module.event_enable(upis.radio.PacketLossEvent)
