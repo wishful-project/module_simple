@@ -20,14 +20,14 @@ class SimpleModule2(SimpleModule):
         self.channel = 1
         self.power = 1
 
-    @wishful_module.bind_function(upis.radio.set_power)
+    @wishful_module.bind_function(upis.radio.set_tx_power)
     def set_power(self, power):
         self.log.debug("SimpleModule2 sets power: {} on interface: {}".format(power, self.interface))
         self.power = power
         return {"SET_POWER_OK_value" : power}
 
 
-    @wishful_module.bind_function(upis.radio.get_power)
+    @wishful_module.bind_function(upis.radio.get_tx_power)
     def get_power(self):
         self.log.debug("SimpleModule2 gets power on interface: {}".format(self.interface))
         return self.power

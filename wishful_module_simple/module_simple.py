@@ -71,14 +71,14 @@ class SimpleModule(wishful_module.AgentModule):
         return self.channel
 
 
-    @wishful_module.bind_function(upis.radio.set_power)
-    def set_power(self, power):
+    @wishful_module.bind_function(upis.radio.set_tx_power)
+    def set_tx_power(self, power):
         self.log.debug("Simple Module sets power: {} on interface: {}".format(power, self.interface))
         self.power = power
         return {"SET_POWER_OK_value" : power}
 
 
-    @wishful_module.bind_function(upis.radio.get_power)
+    @wishful_module.bind_function(upis.radio.get_tx_power)
     def get_power(self):
         self.log.debug("Simple Module gets power on interface: {}".format(self.interface))
         return self.power
@@ -109,7 +109,6 @@ class SimpleModule(wishful_module.AgentModule):
     @wishful_module.generator()
     @wishful_module.before_call(before_get_rssi)
     @wishful_module.after_call(after_get_rssi)
-    @wishful_module.bind_function(upis.radio.get_rssi)
     def get_rssi(self):
         self.log.debug("Get RSSI".format())
         while True:
