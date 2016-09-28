@@ -19,16 +19,16 @@ class SimpleModule2(SimpleModule):
         self.channel = 1
         self.power = 1
 
-    @wishful_module.on_function(upis.radio.set_power)
-    def set_power(self, power, iface):
+    @wishful_module.on_function(upis.radio.set_tx_power)
+    def set_tx_power(self, power, iface):
         self.log.debug("SimpleModule2 sets power: {} on device: {} and iface: {}"
                        .format(power, self.device, iface))
         self.power = power
-        return {"SET_POWER_OK_value": power}
+        return {"SET_TX_POWER_OK_value": power}
 
-    @wishful_module.on_function(upis.radio.get_power)
-    def get_power(self, iface):
-        self.log.debug("SimpleModule2 gets power on device: {}"
+    @wishful_module.on_function(upis.radio.get_tx_power)
+    def get_tx_power(self, iface):
+        self.log.debug("SimpleModule2 gets TX power on device: {}"
                        .format(self.device))
         return self.power
 

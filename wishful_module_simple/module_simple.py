@@ -73,17 +73,17 @@ class SimpleModule(wishful_module.AgentModule):
             .format(self.device, iface))
         return self.channel
 
-    @wishful_module.bind_function(upis.radio.set_power)
-    def set_power(self, power, iface):
+    @wishful_module.bind_function(upis.radio.set_tx_power)
+    def set_tx_power(self, power, iface):
         self.log.debug("Simple Module sets power: {} on device: {} and iface: {}".format(
             power, self.device, iface))
         self.power = power
-        return {"SET_POWER_OK_value": power}
+        return {"SET_TX_POWER_OK_value": power}
 
-    @wishful_module.bind_function(upis.radio.get_power)
-    def get_power(self, iface):
+    @wishful_module.bind_function(upis.radio.get_tx_power)
+    def get_tx_power(self, iface):
         self.log.debug(
-            "Simple Module gets power on device: {} and iface: {}".format(self.device, iface))
+            "Simple Module gets TX power on device: {} and iface: {}".format(self.device, iface))
         return self.power
 
     @wishful_module.event_enable(upis.radio.PacketLossEvent)
