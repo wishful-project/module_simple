@@ -117,7 +117,7 @@ class SimpleModule(wishful_module.AgentModule):
         self._spectralScanServiceRunning = False
 
     @wishful_module.on_function(upis.radio.clean_per_flow_tx_power_table)
-    def clean_per_flow_tx_power_table(self):
+    def clean_per_flow_tx_power_table(self, iface):
         self.log.debug("clean per flow tx power table".format())
         raise exceptions.UPIFunctionExecutionFailedException(
             func_name='radio.clean_per_flow_tx_power_table', err_msg='wrong')
