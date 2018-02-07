@@ -1,0 +1,25 @@
+# it is important to give here full and correct path!!
+package wishful_module_simple.proto.messages_pb2;
+
+message Statistics {
+    required string datetime = 1;
+    required string type = 2;
+    required string name = 3;
+    required string interface = 4;
+    required uint32 tx_frames = 5;
+    required uint32 rx_frames = 6;
+    required uint32 drop_frames = 7;
+    required uint32 tx_bytes = 8;
+    required uint32 rx_bytes = 9;
+    required uint32 drop_bytes = 10;
+    required float avg_throughput = 11;
+}
+
+message Channel {
+    required string type = 1;
+    required uint32 number = 2;
+    required float fl = 4;
+    required float fc = 5;
+    required float fh = 6;
+}
+
