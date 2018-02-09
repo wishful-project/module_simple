@@ -7,7 +7,7 @@ import wishful_upis as upis
 import wishful_framework as wishful_module
 from wishful_framework.classes import exceptions
 
-import wishful_module_simple.proto.messages_pb2 as msgs
+import wishful_module_simple.proto.messages_pickle as msgs
 
 __author__ = "Piotr Gawlowicz"
 __copyright__ = "Copyright (c) 2015, Technische Universität Berlin"

@@ -5,6 +5,8 @@ import wishful_framework as wishful_module
 from wishful_framework.classes import exceptions
 
 from .module_simple import SimpleModule
+import wishful_module_simple.proto.messages_pb2 as msgs
+
 
 __author__ = "Piotr Gawlowicz"
 __copyright__ = "Copyright (c) 2015, Technische Universität Berlin"
@@ -62,3 +64,16 @@ class SimpleModule2(SimpleModule):
         print("TxOp: {}".format(queueParams.getTxOp()))
 
         return 0
+
+    @wishful_module.bind_function(upis.wifi.radio.get_channel)
+    def get_channel(self):
+        self.log.debug("Simple Module gets channel of interface: {}".format(self.interface))
+
+        response = msgs.Channel()
+        response.type = "BW20"
+        response.number = self.channel
+        response.fl = 2412 - 10
+        response.fc = 2412
+        response.fh = 2412 + 10
+
+        return response
