@@ -65,8 +65,7 @@ class SimpleModule2(SimpleModule):
 
         return 0
 
-    @wishful_module.bind_function(upis.wifi.radio.get_channel)
-    def get_channel(self):
+    def get_channel_desc(self):
         self.log.debug("Simple Module gets channel of interface: {}".format(self.interface))
 
         response = msgs.Channel()
@@ -75,5 +74,9 @@ class SimpleModule2(SimpleModule):
         response.fl = 2412 - 10
         response.fc = 2412
         response.fh = 2412 + 10
-
         return response
+
+    @wishful_module.bind_function(upis.wifi.radio.get_channel)
+    def get_channel(self):
+        self.log.debug("Simple Module gets channel of interface: {}".format(self.interface))
+        return self.channel

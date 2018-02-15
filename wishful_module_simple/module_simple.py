@@ -67,8 +67,8 @@ class SimpleModule(wishful_module.AgentModule):
         return ["SET_CHANNEL_OK", channel, 0]
 
 
-    @wishful_module.bind_function(upis.wifi.radio.get_channel)
-    def get_channel(self):
+    #@wishful_module.bind_function(upis.wifi.radio.get_channel)
+    def get_channel_desc(self):
         self.log.debug("Simple Module gets channel of interface: {}".format(self.interface))
 
         response = msgs.Channel()
@@ -77,9 +77,12 @@ class SimpleModule(wishful_module.AgentModule):
         response.fl = 2412 - 10
         response.fc = 2412
         response.fh = 2412 + 10
-
         return response
 
+    @wishful_module.bind_function(upis.wifi.radio.get_channel)
+    def get_channel(self):
+        self.log.debug("Simple Module gets channel of interface: {}".format(self.interface))
+        return self.channel
 
     @wishful_module.bind_function(upis.radio.set_tx_power)
     def set_tx_power(self, power):
